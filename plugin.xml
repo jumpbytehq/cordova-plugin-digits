@@ -49,6 +49,7 @@
     </config-file>
 
     <source-file src="src/android/CordovaDigits.java" target-dir="src/com/jimmymakesthings/plugins/digits" />
+    <resource-file src="src/android/styles.xml" target="res/values" />
   </platform>
 
   <platform name="ios">
