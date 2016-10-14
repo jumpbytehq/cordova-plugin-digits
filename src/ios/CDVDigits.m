@@ -39,6 +39,7 @@
   appearance = [[DGTAppearance alloc] init];
   configuration = [[DGTAuthenticationConfiguration alloc] initWithAccountFields:DGTAccountFieldsDefaultOptionMask];
   configuration.appearance = appearance;
+  configuration.phoneNumber = [options objectForKey:@"phoneNumber"];
 
   if ([options objectForKey:@"backgroundColor"]) { appearance.accentColor = [CDVDigits colorFromHexString:[options objectForKey:@"backgroundColor"]]; }
   if ([options objectForKey:@"accentColor"]) { appearance.accentColor = [CDVDigits colorFromHexString:[options objectForKey:@"accentColor"]]; }
@@ -49,8 +50,11 @@
     CDVPluginResult* pluginResult = nil;
 
     if (session) {
+      NSLog(@"%@", session.phoneNumber);
       DGTOAuthSigning *oauthSigning = [[DGTOAuthSigning alloc] initWithAuthConfig:digits.authConfig authSession:digits.session];
-      NSDictionary *authHeaders = [oauthSigning OAuthEchoHeadersToVerifyCredentials];
+      NSMutableDictionary *authHeaders = [NSMutableDictionary dictionaryWithDictionary: [oauthSigning OAuthEchoHeadersToVerifyCredentials]];
+      authHeaders[@"phoneNumber"] = session.phoneNumber;
+      NSLog(@"%@", authHeaders);
 
       NSError *error;
       NSData *jsonData = [NSJSONSerialization dataWithJSONObject:authHeaders
