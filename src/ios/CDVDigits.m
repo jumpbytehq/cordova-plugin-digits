@@ -54,7 +54,6 @@
       DGTOAuthSigning *oauthSigning = [[DGTOAuthSigning alloc] initWithAuthConfig:digits.authConfig authSession:digits.session];
       NSMutableDictionary *authHeaders = [NSMutableDictionary dictionaryWithDictionary: [oauthSigning OAuthEchoHeadersToVerifyCredentials]];
       authHeaders[@"phoneNumber"] = session.phoneNumber;
-      NSLog(@"%@", authHeaders);
 
       NSError *error;
       NSData *jsonData = [NSJSONSerialization dataWithJSONObject:authHeaders
